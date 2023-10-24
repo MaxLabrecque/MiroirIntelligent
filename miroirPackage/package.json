@@ -1,0 +1,29 @@
+{
+  "name": "miroirpackage",
+  "version": "2.6.2",
+  "description": "Package npm pour le projet miroir",
+  "exports": {
+    "./*": "./*.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://bitbucket.cstjean.qc.ca:7990/scm/a23-multi-bll/miroirpackage.git"
+  },
+  "keywords": [
+    "miroir"
+  ],
+  "author": "MaximeLabrecque",
+  "license": "ISC",
+  "dependencies": {
+    "@stomp/stompjs": "^7.0.0",
+    "axios": "^1.5.1",
+    "sockjs-client": "^1.6.1"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "moment-timezone": "^0.5.43"
+  }
+}

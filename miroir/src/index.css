@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --brightness: 75.7%;
+}
+body {
+    color: hsl(188.2deg, 100%, var(--brightness));
+    transition: color 2s;
+}
+
+#dateTime {
+    text-shadow: hsl(188.2deg, 100%, var(--brightness)) 5px 5px 10px;
+    transition: text-shadow 2s;
+}
+
+#dateBox {
+    box-shadow: hsl(188.2deg, 100%, var(--brightness)) 5px 5px 10px;
+    transition: box-shadow 2s;
+}
+
