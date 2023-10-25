@@ -1,4 +1,4 @@
-import React, {useState, createContext, useEffect, useCallback} from 'react';
+import React, { useState, createContext, useEffect, useCallback } from 'react';
 import WebSocket from '../WebSocket/WebSocket';
 import ApiCall from '../Api/ApiCall';
 
@@ -63,10 +63,18 @@ const ConfigProvider = (props) => {
   const loadConfig = useCallback(() => {
     ApiCall.getAllConfig().then((res) => {
       Object.keys(res).forEach((key) => {
-        setConfigHooks(JSON.stringify({"configName" : key, "configValue" : res[key]}));
+        setConfigHooks(JSON.stringify({ "configName": key, "configValue": res[key] }));
       });
     });
-    }, []);
+  }, []);
+
+  const configActions = {
+    timeMode: (configValue) => setIs12h(configValue === 'true'),
+    timezone: (configValue) => setTimezone(configValue),
+    brightnessStart: (configValue) => setBrightnessTimeStart(configValue),
+    brightnessEnd: (configValue) => setBrightnessTimeEnd(configValue),
+    brightnessIdle: (configValue) => setBrightnessIdle(configValue),
+  }
 
   /**
    * Set the config hooks
@@ -74,31 +82,20 @@ const ConfigProvider = (props) => {
    */
   const setConfigHooks = (config) => {
     config = JSON.parse(config);
-    switch (config.configName) {
-      case ('timeMode'):
-        setIs12h(config.configValue === 'true');
-        break;
-      case ('timezone'):
-        setTimezone(config.configValue);
-        break;
-      case ('brightnessStart'):
-        setBrightnessTimeStart(config.configValue);
-        break;
-      case ('brightnessEnd'):
-        setBrightnessTimeEnd(config.configValue);
-        break;
-      case ('brightnessIdle'):
-        setBrightnessIdle(config.configValue);
-        break;
-      default:
-        console.error('Invalid config name');
+    
+    const {configName, configValue} = config;
+
+    if (configActions[configName]) {
+      configActions[configName](configValue);
+    } else {
+      console.error("Invalid config name")
     }
   }
 
   return (
-      <ConfigContext.Provider value={data}>
-        {props.children}
-      </ConfigContext.Provider>
+    <ConfigContext.Provider value={data}>
+      {props.children}
+    </ConfigContext.Provider>
   )
 }
 
